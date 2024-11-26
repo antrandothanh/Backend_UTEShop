@@ -36,7 +36,7 @@ exports.addProductToFavorite = async (req, res) => {
         await favorite.addProduct(product);
 
         res.status(200).json({ message: 'Product added to favorites', favorite });
-        
+
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -75,7 +75,7 @@ exports.deleteProductFromFavorite = async (req, res) => {
         await favorite.removeProduct(product);
 
         res.status(200).json({ message: 'Product removed from favorites' });
-        
+
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
