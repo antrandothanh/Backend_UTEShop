@@ -5,6 +5,7 @@ const productRoutes = require('./routes/productRoutes');
 const categoryRoutes = require("./routes/categoryRoutes");
 const sizeRoutes = require("./routes/sizeRoutes");
 const favoriteRoutes = require("./routes/favoriteRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use('/api', productRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", sizeRoutes);
 app.use("/api", favoriteRoutes);
+app.use("/api", cartRoutes);
 
 // Sync Database
 (async () => {
