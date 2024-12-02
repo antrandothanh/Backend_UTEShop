@@ -80,3 +80,34 @@ exports.deleteProductFromFavorite = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+// Lấy danh sách sản phẩm yêu thích của người dùng
+exports.getFavoriteList = async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        // Kiểm tra người dùng có tồn tại không
+        const user = await User.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Tìm danh sách yêu thích của người dùng
+        const favorite = await Favorite.findOne({
+            where: { userId: userId },
+            include: {
+                model: Product,
+                attributes: ['id', 'name', 'price', 'color', 'imageUrl'], // Chỉ lấy các thông tin cần thiết của sản phẩm
+            },
+        });
+
+        if (!favorite || favorite.products.length === 0) {
+            return res.status(200).json({ message: 'No products in favorite list', products: [] });
+        }
+
+        // Trả về danh sách sản phẩm yêu thích
+        res.status(200).json({ favoriteId: favorite.id, products: favorite.products });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
